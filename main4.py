@@ -6,68 +6,6 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 import mysql.connector
 
-
-class timer_Window(QMainWindow):
-
-    def __init__(self):
-        super().__init__()
-
-        # setting title
-        self.setWindowTitle("Python Stop watch")
-
-        # setting geometry
-        self.setGeometry(700, 0, 100, 480)
-
-        # calling method
-        self.timer_Components()
-
-        # showing all the widgets
-        self.show()
-
-    def timer_Components(self):
-        self.setWindowFlag(Qt.FramelessWindowHint)
-        self.count = 0
-        self.flag = False
-        self.timer_label = QLabel(self)
-        self.timer_label.setGeometry(0, 0, 300, 100)
-
-        self.timer_label.setText(str(self.count))
-        self.timer_label.setFont(QFont('Arial', 25))
-
-        start = QPushButton("Start", self)
-        start.setGeometry(0, 100, 50, 40)
-        start.pressed.connect(self.Start)
-
-        pause = QPushButton("Pause", self)
-        pause.setGeometry(0, 150, 50, 40)
-        pause.pressed.connect(self.Pause)
-
-        re_set = QPushButton("Re-set", self)
-        re_set.setGeometry(0, 200, 50, 70)
-        re_set.pressed.connect(self.Re_set)
-
-        timer = QTimer(self)
-        timer.timeout.connect(self.showTime)
-        timer.start(100)
-
-    def showTime(self):
-        if self.flag:
-            self.count += 1
-        text = str(self.count / 10)
-        self.timer_label.setText(text)
-
-    def Start(self):
-        self.flag = True
-
-    def Pause(self):
-        self.flag = False
-
-    def Re_set(self):
-        self.flag = False
-        self.count = 0
-        self.timer_label.setText(str(self.count))
-
-
 config = {
     "user": "root",
     "password": "root",
@@ -350,9 +288,6 @@ class MyApp(QWidget):
 
     def test_o(self, t):
         self.orange1_img.setStyleSheet("background-color: orange")
-        self.orange2_img.setStyleSheet("background-color: orange")
-        self.orange3_img.setStyleSheet("background-color: orange")
-        self.orange4_img.setStyleSheet("background-color: orange")
         self.update()
         self.repaint()  # 새로고침
         time.sleep(t)
@@ -362,18 +297,12 @@ class MyApp(QWidget):
         self.orange4_img.setStyleSheet("background-color: black")
 
 
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     timer = QApplication(sys.argv)
-
     ex = MyApp()
-    #window = timer_Window()
-
     dark_stylesheet = qdarkstyle.load_stylesheet_pyqt5()
     ex.setStyleSheet(dark_stylesheet)
-    #window.setStyleSheet(dark_stylesheet)
-
     ex.show()
-
     sys.exit(app.exec_())
-    #sys.exit(timer.exec())
