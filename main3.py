@@ -44,16 +44,16 @@ edge = {
 column_idx_lookup = {'t_1': 0, 't_2': 1, 't_3': 2, 't_4': 3, 't_5': 4}
 
 
-class TestThread(QThread):
-
-    def __init__(self, parent=None):
-        super().__init__()
-        self.main = parent
-        self.isRun = False
-
-    def run(self):
-        if self.isRun:
-            print("qasdasda")
+# class TestThread(QThread):
+#
+#     def __init__(self, parent=None):
+#         super().__init__()
+#         self.main = parent
+#         self.isRun = False
+#
+#     def run(self):
+#         if self.isRun:
+#             print("qasdasda")
 
 
 class MyApp(QWidget):
@@ -96,14 +96,14 @@ class MyApp(QWidget):
         self.layout_traffic() #초기 신호등 UI 세팅
         self.Accident = QPushButton('Accident', self)  #Accident 버튼 정의
         self.Accident.move(680, 350)
-        self.Accident.clicked.connect(self.threadStart)
-        self.th = TestThread(self)
+        self.Accident.clicked.connect(self.test)
+        # self.th = TestThread(self)
         #self.Accident.clicked.connect(lambda: self.t2())
 
 
         self.Non_Accident = QPushButton('Non_Accid', self)    #Non_Accident 버튼 정의
         self.Non_Accident.move(680, 390)
-        self.Non_Accident.clicked.connect(self.threadStop)
+        self.Non_Accident.clicked.connect(self.test)
 
         #요기서부터 테이블 모양 보여주기
         self.tableWidget = QTableWidget(self)
@@ -118,18 +118,23 @@ class MyApp(QWidget):
         self.resize(800, 480)
         self.show()
 
-    @pyqtSlot()
-    def threadStart(self):
-        if not self.th.isRun:
-            print('메인 : 쓰레드 시작')
-            self.th.isRun = True
-            self.th.start()
+    # @pyqtSlot()
+    # def threadStart(self):
+    #     if not self.th.isRun:
+    #         print('메인 : 쓰레드 시작')
+    #         self.th.isRun = True
+    #         self.th.start()
+    #
+    # @pyqtSlot()
+    # def threadStop(self):
+    #     if self.th.isRun:
+    #         print('메인 : 쓰레드 정지')
+    #         self.th.isRun = False
 
-    @pyqtSlot()
-    def threadStop(self):
-        if self.th.isRun:
-            print('메인 : 쓰레드 정지')
-            self.th.isRun = False
+    def reset(self):
+        loop = QEventLoop()
+        QTimer.singleShot(10000, loop.quit)
+        loop.exec_()
 
     def layout_traffic(self):
             layout = QPixmap('layout.png')
@@ -218,7 +223,7 @@ class MyApp(QWidget):
         self.leftg1_img.setStyleSheet("background-color: green")
         self.update()
         self.repaint() #새로고침
-        time.sleep(t)
+        reset(5)
 
         self.red2_img.setStyleSheet("background-color: black")
         self.red3_img.setStyleSheet("background-color: black")
@@ -234,7 +239,7 @@ class MyApp(QWidget):
         self.leftg2_img.setStyleSheet("background-color: green")
         self.update()
         self.repaint() #새로고침
-        time.sleep(t)
+        self.reset()
 
         self.red1_img.setStyleSheet("background-color: black")
         self.red3_img.setStyleSheet("background-color: black")
@@ -250,7 +255,7 @@ class MyApp(QWidget):
         self.leftg3_img.setStyleSheet("background-color: green")
         self.update()
         self.repaint()  # 새로고침
-        time.sleep(t)
+        self.reset()
 
         self.red1_img.setStyleSheet("background-color: black")
         self.red2_img.setStyleSheet("background-color: black")
@@ -266,8 +271,7 @@ class MyApp(QWidget):
         self.leftg4_img.setStyleSheet("background-color: green")
         self.update()
         self.repaint()  # 새로고침
-        time.sleep(t)
-
+        self.reset()
         self.red1_img.setStyleSheet("background-color: black")
         self.red2_img.setStyleSheet("background-color: black")
         self.red3_img.setStyleSheet("background-color: black")
@@ -281,7 +285,7 @@ class MyApp(QWidget):
         self.orange4_img.setStyleSheet("background-color: orange")
         self.update()
         self.repaint()  # 새로고침
-        time.sleep(t)
+        self.reset()
         self.orange1_img.setStyleSheet("background-color: black")
         self.orange2_img.setStyleSheet("background-color: black")
         self.orange3_img.setStyleSheet("background-color: black")
@@ -291,7 +295,7 @@ class MyApp(QWidget):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     app.setStyle(QStyleFactory.create('Fusion')) # 헤더색 변경
-    timer = QApplication(sys.argv)
+    # timer = QApplication(sys.argv)
     ex = MyApp()
     sys.exit(app.exec_())
 

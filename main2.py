@@ -45,15 +45,6 @@ column_idx_lookup = {'t_1': 0, 't_2': 1, 't_3': 2, 't_4': 3, 't_5': 4}
 
 
 
-class Thread1(QThread):
-    #parent = MainWidget을 상속 받음.
-    def __init__(self, parent):
-        super().__init__(parent)
-    def run(self):
-        for i in range(140):
-            print("Thread :",i+1)
-            time.sleep(1)
-
 class MyApp(QWidget):
     def __init__(self):
         super().__init__()
@@ -98,7 +89,6 @@ class MyApp(QWidget):
         self.Accident = QPushButton('Accident', self)  #Accident 버튼 정의
         self.Accident.move(680, 350)
         self.Accident.clicked.connect(self.test)
-        #self.Accident.clicked.connect(lambda: self.t2())
 
 
         self.Non_Accident = QPushButton('Non_Accid', self)    #Non_Accident 버튼 정의
@@ -117,13 +107,6 @@ class MyApp(QWidget):
 
         self.resize(800, 480)
         self.show()
-
-    def increaseNumber(self):
-        x = Thread1(self)
-        x.start()
-
-    def ChangeSelectionColor(self):
-        self.tableWidget.setStyleSheet("QTableWidget.background-color:green")
 
     def layout_traffic(self):
             layout = QPixmap('layout.png')
@@ -193,7 +176,6 @@ class MyApp(QWidget):
 
     def test(self):
 
-        self.increaseNumber()
         self.test_1(edgeDB[0][0])
         self.test_o(edgeDB[0][4])
         self.test_2(edgeDB[0][1])
@@ -271,83 +253,16 @@ class MyApp(QWidget):
 
     def test_o(self, t):
         self.orange1_img.setStyleSheet("background-color: orange")
-        self.orange2_img.setStyleSheet("background-color: orange")
-        self.orange3_img.setStyleSheet("background-color: orange")
-        self.orange4_img.setStyleSheet("background-color: orange")
+        self.orange2_img.setStyleSheet("background-color: black")
+        self.orange3_img.setStyleSheet("background-color: black")
+        self.orange4_img.setStyleSheet("background-color: black")
         self.update()
         self.repaint()  # 새로고침
         time.sleep(t)
         self.orange1_img.setStyleSheet("background-color: black")
-        self.orange2_img.setStyleSheet("background-color: black")
-        self.orange3_img.setStyleSheet("background-color: black")
-        self.orange4_img.setStyleSheet("background-color: black")
-
-# class timer_Window(QMainWindow):
-#
-#
-#         # setting title
-#         self.setWindowTitle("Python Stop watch")
-#
-#         # setting geometry
-#         self.setGeometry(100, 100, 300, 100)
-#
-#         # calling method
-#         self.timer_Components()
-#
-#         # showing all the widgets
-#         self.show()
-#
-#     def timer_Components(self):
-#
-#         self.count = 0
-#         self.flag = False
-#         self.timer_label = QLabel(self)
-#         self.timer_label.setGeometry(0, 0, 300, 100)
-#         self.timer_label.setStyleSheet("border : 4px solid black;")
-#         self.timer_label.setText(str(self.count))
-#         self.timer_label.setFont(QFont('Arial', 25))
-#
-#         start = QPushButton("Start", self)
-#         start.setGeometry(125, 250, 150, 40)
-#         start.pressed.connect(self.Start)
-#
-#         pause = QPushButton("Pause", self)
-#         pause.setGeometry(125, 300, 150, 40)
-#         pause.pressed.connect(self.Pause)
-#
-#         re_set = QPushButton("Re-set", self)
-#         re_set.setGeometry(125, 350, 150, 40)
-#         re_set.pressed.connect(self.Re_set)
-#
-#         timer = QTimer(self)
-#         timer.timeout.connect(self.showTime)
-#         timer.start(100)
-#         self.threadclass.start()
-#
-#         def showTime(self):
-#         if self.flag:
-#             self.count += 1
-#         text = str(self.count / 10)
-#         self.timer_label.setText(text)
-#
-#     def Start(self):
-#         self.flag = True
-#
-#     def Pause(self):
-#         self.flag = False
-#
-#     def Re_set(self):
-#         self.flag = False
-#         self.count = 0
-#         self.timer_label.setText(str(self.count))
-
-
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     app.setStyle(QStyleFactory.create('Fusion')) # 헤더색 변경
-    timer = QApplication(sys.argv)
     ex = MyApp()
-    # window = timer_Window()
     sys.exit(app.exec_())
-    # sys.exit(timer.exec())
