@@ -1,6 +1,6 @@
 import time
 import sys
-import qdarkstyle
+# import qdarkstyle
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -45,6 +45,8 @@ column_idx_lookup = {'t_1': 0, 't_2': 1, 't_3': 2, 't_4': 3, 't_5': 4}
 
 
 class MyApp(QWidget):
+    global a
+    a = 0
     def __init__(self):
         super().__init__()
         self.initUI()
@@ -108,11 +110,10 @@ class MyApp(QWidget):
         self.Accident = QPushButton('Accident', self)  # Accident 버튼 정의
         self.Accident.move(500, 250)
         self.Accident.clicked.connect(self.testb)
-        # self.Accident.clicked.connect(lambda: self.t2())
 
         self.Non_Accident = QPushButton('Non_Accid', self)  # Non_Accident 버튼 정의
         self.Non_Accident.move(400, 250)
-        self.Non_Accident.clicked.connect(self.testa)
+        self.Non_Accident.clicked.connect(self.alloff)
 
         # 요기서부터 테이블 모양 보여주기
         self.tableWidget1 = QTableWidget(self)
@@ -196,27 +197,58 @@ class MyApp(QWidget):
 
         return
 
+
+    def alloff(self):
+        global a
+        a = 1
+        self.orange1_img.setStyleSheet("background-color: black")
+        self.orange2_img.setStyleSheet("background-color: black")
+        self.orange3_img.setStyleSheet("background-color: black")
+        self.orange4_img.setStyleSheet("background-color: black")
+        self.red2_img.setStyleSheet("background-color: black")
+        self.red3_img.setStyleSheet("background-color: black")
+        self.red4_img.setStyleSheet("background-color: black")
+        self.red1_img.setStyleSheet("background-color: black")
+        self.leftg2_img.setStyleSheet("background-color: black")
+        self.leftg3_img.setStyleSheet("background-color: black")
+        self.leftg4_img.setStyleSheet("background-color: black")
+        self.leftg1_img.setStyleSheet("background-color: black")
+        self.green1_img.setStyleSheet("background-color: black")
+        self.green2_img.setStyleSheet("background-color: black")
+        self.green3_img.setStyleSheet("background-color: black")
+        self.green4_img.setStyleSheet("background-color: black")
+        self.update()
+        self.repaint()
+
+
+
     def testa(self):
-
-        self.test_1(edgeDB[0][0])
-        self.test_o(edgeDB[0][4])
-        self.test_2(edgeDB[0][1])
-        self.test_o(edgeDB[0][4])
-        self.test_3(edgeDB[0][2])
-        self.test_o(edgeDB[0][4])
-        self.test_4(edgeDB[0][3])
-        self.test_o(edgeDB[0][4])
-
-    def testb(self):
 
         self.test_1(edgeDB2[0][0])
         self.test_o(edgeDB2[0][4])
         self.test_2(edgeDB2[0][1])
-        self.test_o(edgeDB2[0][4])
+        self.test_o2(edgeDB2[0][4])
         self.test_3(edgeDB2[0][2])
-        self.test_o(edgeDB2[0][4])
+        self.test_o3(edgeDB2[0][4])
         self.test_4(edgeDB2[0][3])
-        self.test_o(edgeDB2[0][4])
+        self.test_o4(edgeDB2[0][4])
+        self.alloff()
+
+    def testb(self):
+        global a
+        a = 0
+        for i in range(10):
+            self.test_1(edgeDB2[0][0])
+            self.test_o(edgeDB2[0][4])
+            self.test_2(edgeDB2[0][1])
+            self.test_o2(edgeDB2[0][4])
+            self.test_3(edgeDB2[0][2])
+            self.test_o3(edgeDB2[0][4])
+            self.test_4(edgeDB2[0][3])
+            self.test_o4(edgeDB2[0][4])
+            self.alloff()
+            if a == 1:
+                break
 
     def test_1(self, t):
 
@@ -228,7 +260,7 @@ class MyApp(QWidget):
 
         self.update()
         self.repaint()  # 새로고침
-        time.sleep(t)
+        self.reset(t)
 
         self.red2_img.setStyleSheet("background-color: black")
         self.red3_img.setStyleSheet("background-color: black")
@@ -238,6 +270,7 @@ class MyApp(QWidget):
 
     def test_2(self, t):
         self.red1_img.setStyleSheet("background-color: red")
+        self.red2_img.setStyleSheet("background-color: black")
         self.red3_img.setStyleSheet("background-color: red")
         self.red4_img.setStyleSheet("background-color: red")
         self.green2_img.setStyleSheet("background-color: green")
@@ -245,7 +278,7 @@ class MyApp(QWidget):
 
         self.update()
         self.repaint()  # 새로고침
-        time.sleep(t)
+        self.reset(t)
 
         self.red1_img.setStyleSheet("background-color: black")
         self.red3_img.setStyleSheet("background-color: black")
@@ -256,13 +289,14 @@ class MyApp(QWidget):
     def test_3(self, t):
         self.red1_img.setStyleSheet("background-color: red")
         self.red2_img.setStyleSheet("background-color: red")
+        self.red3_img.setStyleSheet("background-color: black")
         self.red4_img.setStyleSheet("background-color: red")
         self.green3_img.setStyleSheet("background-color: green")
         self.leftg3_img.setStyleSheet("background-color: green")
 
         self.update()
         self.repaint()  # 새로고침
-        time.sleep(t)
+        self.reset(t)
 
         self.red1_img.setStyleSheet("background-color: black")
         self.red2_img.setStyleSheet("background-color: black")
@@ -274,11 +308,13 @@ class MyApp(QWidget):
         self.red1_img.setStyleSheet("background-color: red")
         self.red2_img.setStyleSheet("background-color: red")
         self.red3_img.setStyleSheet("background-color: red")
+        self.red4_img.setStyleSheet("background-color: black")
         self.green4_img.setStyleSheet("background-color: green")
         self.leftg4_img.setStyleSheet("background-color: green")
+
         self.update()
         self.repaint()  # 새로고침
-        time.sleep(t)
+        self.reset(t)
 
         self.red1_img.setStyleSheet("background-color: black")
         self.red2_img.setStyleSheet("background-color: black")
@@ -288,21 +324,76 @@ class MyApp(QWidget):
 
     def test_o(self, t):
         self.orange1_img.setStyleSheet("background-color: orange")
+        self.red2_img.setStyleSheet("background-color: red")
+        self.red3_img.setStyleSheet("background-color: red")
+        self.red4_img.setStyleSheet("background-color: red")
+
         self.update()
         self.repaint()  # 새로고침
         time.sleep(t)
+
+        self.orange1_img.setStyleSheet("background-color: black")
+        self.orange2_img.setStyleSheet("background-color: black")
+        self.orange3_img.setStyleSheet("background-color: black")
+        self.orange4_img.setStyleSheet("background-color: black")
+
+    def test_o2(self, t):
+        self.orange2_img.setStyleSheet("background-color: orange")
+        self.red1_img.setStyleSheet("background-color: red")
+        self.red3_img.setStyleSheet("background-color: red")
+        self.red4_img.setStyleSheet("background-color: red")
+
+        self.update()
+        self.repaint()  # 새로고침
+        time.sleep(t)
+
+        self.orange1_img.setStyleSheet("background-color: black")
+        self.orange2_img.setStyleSheet("background-color: black")
+        self.orange3_img.setStyleSheet("background-color: black")
+        self.orange4_img.setStyleSheet("background-color: black")
+
+    def test_o3(self, t):
+        self.orange3_img.setStyleSheet("background-color: orange")
+        self.red1_img.setStyleSheet("background-color: red")
+        self.red2_img.setStyleSheet("background-color: red")
+        self.red4_img.setStyleSheet("background-color: red")
+
+        self.update()
+        self.repaint()  # 새로고침
+        time.sleep(t)
+
+        self.orange1_img.setStyleSheet("background-color: black")
+        self.orange2_img.setStyleSheet("background-color: black")
+        self.orange3_img.setStyleSheet("background-color: black")
+        self.orange4_img.setStyleSheet("background-color: black")
+
+    def test_o4(self, t):
+        self.orange4_img.setStyleSheet("background-color: orange")
+        self.red1_img.setStyleSheet("background-color: red")
+        self.red2_img.setStyleSheet("background-color: red")
+        self.red3_img.setStyleSheet("background-color: red")
+
+        self.update()
+        self.repaint()  # 새로고침
+        time.sleep(t)
+
         self.orange1_img.setStyleSheet("background-color: black")
         self.orange2_img.setStyleSheet("background-color: black")
         self.orange3_img.setStyleSheet("background-color: black")
         self.orange4_img.setStyleSheet("background-color: black")
 
 
+    def reset(self, t):
+        for n in range(t*10):
+            QApplication.processEvents()
+            time.sleep(0.1)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    timer = QApplication(sys.argv)
+    # timer = QApplication(sys.argv)
     ex = MyApp()
-    dark_stylesheet = qdarkstyle.load_stylesheet_pyqt5()
-    ex.setStyleSheet(dark_stylesheet)
+    # dark_stylesheet = qdarkstyle.load_stylesheet_pyqt5()
+    # ex.setStyleSheet(dark_stylesheet)
     ex.show()
     sys.exit(app.exec_())
