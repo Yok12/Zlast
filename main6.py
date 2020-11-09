@@ -115,7 +115,7 @@ class MyApp(QWidget):
         self.Non_Accident.move(400, 250)
         self.Non_Accident.clicked.connect(self.testa)
 
-        self.Non_Accident = QPushButton('Restart', self)  # Non_Accident 버튼 정의
+        self.Non_Accident = QPushButton('Refresh', self)  # Non_Accident 버튼 정의
         self.Non_Accident.move(600, 250)
         self.Non_Accident.clicked.connect(self.restart)
 
@@ -222,9 +222,9 @@ class MyApp(QWidget):
         self.update()
         self.repaint()
 
-    def restart(self):
+    def restart(self): #새로고침
         self.close()
-        subprocess.Popen(['python', 'main4.py'])
+        subprocess.Popen(['python', 'main6.py'])
 
     def testa(self):
 
@@ -390,9 +390,6 @@ class MyApp(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    # timer = QApplication(sys.argv)
     ex = MyApp()
-    # dark_stylesheet = qdarkstyle.load_stylesheet_pyqt5()
-    # ex.setStyleSheet(dark_stylesheet)
     ex.show()
     sys.exit(app.exec_())
